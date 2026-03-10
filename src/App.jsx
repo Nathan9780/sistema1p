@@ -24,11 +24,7 @@ function AppRoutes() {
       {/* Rotas Protegidas */}
       <Route
         path="/"
-        element={
-          <RotaProtegida>
-            <Dashboard />
-          </RotaProtegida>
-        }
+        element={<RotaProtegida>{<Dashboard />}</RotaProtegida>}
       />
 
       <Route
