@@ -1,30 +1,30 @@
-import { useAuth } from "../contexts/AuthContext";
-import { supabase } from "../lib/supabase";
+import Sidebar from "../components/Sidebar";
 
 export default function Dashboard() {
-  const { user, role } = useAuth();
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
-
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <p>
-        Bem-vindo(a), <strong>{user?.email}</strong>!
-      </p>
-      <p>
-        Seu perfil de acesso é:{" "}
-        <span className="uppercase font-bold text-blue-600">{role}</span>
-      </p>
+    <div className="flex bg-gray-100 min-h-screen">
+      {/* Nosso Menu Lateral fica aqui na esquerda */}
+      <Sidebar />
 
-      <button
-        onClick={handleLogout}
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-      >
-        Sair do Sistema
-      </button>
+      {/* A área principal onde o conteúdo da página vai aparecer */}
+      <main className="flex-1 p-8">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Bem-vindo ao Painel!
+        </h1>
+        <p className="mt-4 text-gray-600">
+          Você está autenticado com sucesso e pronto para navegar.
+        </p>
+
+        {/* Aqui depois podemos colocar cards de resumo, tabelas, etc. */}
+        <div className="mt-8 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-700">
+            Resumo do Sistema
+          </h3>
+          <p className="text-gray-500 mt-2">
+            Esta é uma área de conteúdo de exemplo.
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

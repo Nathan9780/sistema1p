@@ -1,23 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext"; // Ajuste o caminho se a sua pasta se chamar diferente
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  // Puxando a nossa função de logout lá do contexto!
+  const { logout } = useContext(AuthContext);
 
-  // Função simples de logout para testarmos
-  const handleLogout = () => {
-    // Aqui depois colocaremos a função de sair do Supabase
-    console.log("Saindo do sistema...");
+  const handleLogout = async () => {
+    // 1. Avisa o Supabase para encerrar a sessão
+    await logout();
+    // 2. Manda o usuário de volta para a tela de Login
     navigate("/login");
   };
 
   return (
     <aside className="w-64 bg-gray-900 text-white flex flex-col min-h-screen shadow-lg">
-      {/* Cabeçalho da Sidebar */}
       <div className="p-6 mb-4">
         <h2 className="text-2xl font-bold text-blue-400">Meu Sistema</h2>
       </div>
 
-      {/* Links de Navegação */}
       <nav className="flex-1 px-4 space-y-2">
         <Link
           to="/dashboard"
@@ -33,7 +35,6 @@ export default function Sidebar() {
         </Link>
       </nav>
 
-      {/* Rodapé da Sidebar (Botão de Sair) */}
       <div className="p-4 border-t border-gray-800">
         <button
           onClick={handleLogout}
