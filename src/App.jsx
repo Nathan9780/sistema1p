@@ -1,52 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 
-// Telas (Vamos criá-las no próximo passo)
+// Importação das Páginas
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Produtos from "./pages/Produtos";
+import Clientes from "./pages/Clientes";
 
-// Componente para proteger as rotas internas
-const RotaProtegida = ({ children }) => {
-  const { user } = useAuth();
-  // Se não tem usuário logado, manda pro login
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
+// NOVA IMPORTAÇÃO: TELA DE VENDAS
+import Vendas from "./pages/Vendas";
+import Relatorios from "./pages/Relatorios";
 
-function AppRoutes() {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-
-      {/* Rotas Protegidas */}
-      <Route
-        path="/"
-        element={<RotaProtegida>{<Dashboard />}</RotaProtegida>}
-      />
-
-      <Route
-        path="/produtos"
-        element={
-          <RotaProtegida>
-            <Produtos />
-          </RotaProtegida>
-        }
-      />
-    </Routes>
-  );
-}
-
-function App() {
+export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/produtos" element={<Produtos />} />
+          <Route path="/clientes" element={<Clientes />} />
+
+          {/* === ROTA DE VENDAS === */}
+          <Route path="/vendas" element={<Vendas />} />
+          <Route path="/relatorios" element={<Relatorios />} />
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 }
-
-export default App;
