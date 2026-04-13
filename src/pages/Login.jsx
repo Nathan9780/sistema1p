@@ -1,88 +1,45 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [erro, setErro] = useState(null);
+const Login = ({ navigateTo }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const { showToast } = useToast();
 
-  const navigate = useNavigate();
-
-  const handleLogin = async (e) => {
-    e.preventDefault(); // Evita que a página recarregue ao enviar o formulário
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    setErro(null);
-
-    // Chama a função de login do Supabase
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setErro("E-mail ou senha incorretos. Tente novamente.");
-      setLoading(false);
+    if (isLogin) {
+      const { error } = await signIn(email, password);
+      if (error) showToast('Erro no login', 3000);
+      else { showToast('Login OK'); navigateTo('home'); }
     } else {
-      // Se der certo, o AuthContext vai perceber a mudança e nós redirecionamos para a Home (Dashboard)
-      navigate("/", { replace: true });
+      const { error } = await signUp(email, password, name);
+      if (error) showToast('Erro no cadastro', 3000);
+      else showToast('Cadastro realizado! Faça login', 4000);
+      setIsLogin(true);
     }
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-          Acesso ao Sistema
-        </h2>
-
-        {/* Exibe mensagem de erro se houver */}
-        {erro && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-            {erro}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              E-mail
-            </label>
-            <input
-              type="email"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Senha
-            </label>
-            <input
-              type="password"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white font-medium 
-              ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"}`}
-          >
-            {loading ? "Entrando..." : "Entrar"}
-          </button>
-        </form>
-      </div>
-    </div>
+    <div className="page-login"><div className="login-container"><div className="login-card">
+      <div className="login-header"><div className="login-logo">NEXUS<span>.</span></div><h2>{isLogin ? 'Bem-vindo' : 'Criar conta'}</h2></div>
+      <form onSubmit={handleSubmit}>
+        {!isLogin && <input type="text" placeholder="Nome" value={name} onChange={e => setName(e.target.value)} required />}
+        <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} required />
+        <input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} required />
+        <button type="submit" className="btn-primary login-btn" disabled={loading}>{loading ? '...' : (isLogin ? 'Entrar' : 'Cadastrar')}</button>
+      </form>
+      <div className="login-footer"><button className="switch-auth-btn" onClick={() => setIsLogin(!isLogin)}>{isLogin ? 'Criar conta' : 'Já tenho conta'}</button></div>
+      <div className="login-demo"><p>Demo: demo@nexus.com / demo123456</p></div>
+    </div></div></div>
   );
-}
+};
+
+export default Login;
