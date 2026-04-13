@@ -71,7 +71,7 @@ export default function Dashboard() {
 
       <main className="flex-1 p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-8">
-          Painel de Controle
+          é o meu papai, GOHAN.
         </h1>
 
         {loading ? (
