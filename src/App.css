@@ -1463,29 +1463,208 @@ body {
   margin-bottom: 1rem;
 }
 
-.coupon-section {
+/* =====================================================
+   ESTILIZAÇÃO DA PÁGINA DE CUPONS
+   ===================================================== */
+
+.page-coupons {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Tabs de navegação (disponíveis / expirados) */
+.coupons-tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 30px;
+}
+
+.tab-btn:hover {
+  color: var(--accent);
+  background: rgba(232, 255, 0, 0.1);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: var(--black);
+}
+
+/* Grid de cupons */
+.coupons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+/* Card individual */
+.coupon-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.coupon-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Badge superior (tipo de desconto) */
+.coupon-badge {
+  background: linear-gradient(135deg, var(--accent), #cfff00);
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: 1px;
+}
+
+/* Conteúdo do card */
+.coupon-content {
+  padding: 1.5rem;
+}
+
+.coupon-code {
+  font-family: monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  background: var(--dark-3);
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 40px;
+  margin-bottom: 0.8rem;
+  letter-spacing: 2px;
+}
+
+.coupon-description {
+  color: var(--light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* Regras do cupom */
+.coupon-rules {
+  background: var(--dark-3);
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.rule-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.rule-item:last-child {
+  border-bottom: none;
+}
+
+.rule-item span {
+  color: var(--mid);
+}
+
+.rule-item strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Botões de ação */
+.coupon-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.btn-copy,
+.btn-use {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 40px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-copy {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  color: var(--white);
+}
+
+.btn-copy:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #1a1a1a;
+}
+
+.btn-use {
+  background: var(--accent);
+  color: #000;
+}
+
+.btn-use:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+/* Mensagem quando não há cupons */
+.coupons-empty {
+  text-align: center;
+  padding: 3rem;
+  background: var(--dark-2);
+  border-radius: 28px;
+  border: 1px dashed var(--border);
+}
+
+.coupons-empty span {
+  font-size: 3rem;
+  display: block;
   margin-bottom: 1rem;
 }
 
-.coupon-section input {
-  flex: 1;
-  padding: 0.5rem;
-  background: var(--dark-3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: white;
+/* Responsividade */
+@media (max-width: 768px) {
+  .coupons-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .coupon-code {
+    font-size: 1.2rem;
+  }
+  .tab-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
 }
-
-.coupon-section button {
-  padding: 0.5rem 1rem;
-  background: var(--accent);
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
 .payment-methods {
   margin: 1rem 0;
   padding: 1rem 0;
@@ -3016,4 +3195,79 @@ body {
 .add-to-cart-fav:active,
 .remove-favorite-btn:active {
   transform: scale(0.95);
+}
+/* Estrelas de avaliação */
+.stars-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s;
+}
+.star-btn.active {
+  color: #ffc107;
+  text-shadow: 0 0 5px #ffc107;
+}
+.review-modal {
+  max-width: 500px;
+  width: 90%;
+  background: var(--dark-2);
+  border-radius: 24px;
+  border: 1px solid var(--accent);
+  overflow: hidden;
+}
+.review-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--dark-3);
+  border-bottom: 1px solid var(--border);
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--mid);
+}
+.modal-body {
+  padding: 1.5rem;
+}
+.review-product {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.review-product img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.review-rating {
+  margin-bottom: 1rem;
+}
+.review-comment textarea {
+  width: 100%;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.8rem;
+  color: white;
+  resize: vertical;
+}
+.modal-footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--dark-3);
+  border-top: 1px solid var(--border);
 }
