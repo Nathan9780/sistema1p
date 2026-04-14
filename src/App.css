@@ -2030,113 +2030,127 @@ body {
 }
 
 /* ========== FAVORITOS - CORRIGIDO ========== */
+/* =============================================
+   FAVORITOS - CENTRALIZADO E AJUSTADO
+   ============================================= */
+
+/* Página de favoritos - container principal */
+.favorites-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Grid responsivo com centralização */
 .favorites-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+  justify-items: center; /* centraliza os cards horizontalmente */
   align-items: stretch;
 }
 
+/* Cada card wrapper - centralizado e com largura máxima */
 .favorite-card-wrapper {
-  position: relative;
-  width: 100%;
   max-width: 280px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 auto; /* centraliza */
   transition: transform 0.25s ease;
-  overflow: visible;
 }
 
 .favorite-card-wrapper:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
 
+/* Card em si */
 .favorite-card-wrapper .product-card {
+  background: var(--dark-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.25s;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: var(--radius-lg);
-  overflow: visible;
-  background: var(--dark-2);
-  border: 1px solid var(--border);
-  transition: var(--trans);
 }
 
 .favorite-card-wrapper:hover .product-card {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   border-color: var(--accent);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagem - tamanho fixo e centralizada */
 .favorite-card-wrapper .card-image {
-  height: 170px;
+  height: 180px;
   width: 100%;
-  background: var(--dark-3);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--dark-3);
   overflow: hidden;
-  border-radius: var(--radius) var(--radius) 0 0;
+  position: relative;
 }
 
 .favorite-card-wrapper .product-img {
   width: auto;
   height: auto;
   max-width: 90%;
-  max-height: 90%;
+  max-height: 160px;
   object-fit: contain;
-  transition: transform 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
-.favorite-card-wrapper:hover .product-img {
-  transform: scale(1.05);
-}
-
+/* Corpo do card */
 .favorite-card-wrapper .card-body {
-  padding: 0.9rem;
+  padding: 1rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
 .favorite-card-wrapper .card-name {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center; /* centraliza nome */
 }
 
 .favorite-card-wrapper .card-price {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--accent);
+  text-align: center;
+  margin: 0.25rem 0;
 }
 
+/* Botão de adicionar ao carrinho dentro do card */
 .favorite-card-wrapper .card-add {
-  padding: 0.45rem;
-  font-size: 0.75rem;
   background: var(--accent);
   color: var(--black);
+  border: none;
   border-radius: var(--radius);
+  padding: 0.5rem;
+  font-weight: 700;
   text-align: center;
   cursor: pointer;
+  transition: 0.2s;
   margin-top: 0.5rem;
-  font-weight: 700;
-  transition: var(--trans);
 }
 
 .favorite-card-wrapper .card-add:hover {
   background: var(--white);
 }
 
+/* Botões flutuantes (coração, remover) - posicionamento absoluto */
 .favorite-actions {
   position: absolute;
   bottom: 12px;
   right: 12px;
   display: flex;
-  gap: 8px;
-  z-index: 25;
+  gap: 10px;
+  z-index: 10;
 }
 
 .add-to-cart-fav,
@@ -2147,12 +2161,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
+  transition: all 0.2s ease;
   border: none;
-  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .add-to-cart-fav {
@@ -2166,7 +2180,7 @@ body {
 }
 
 .remove-favorite-btn {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
 }
 
@@ -2175,19 +2189,58 @@ body {
   transform: scale(1.08);
 }
 
+/* Estado vazio */
 .favorites-empty {
   text-align: center;
   padding: 3rem;
-  border: 1px dashed var(--border);
+  background: var(--dark-2);
   border-radius: var(--radius-lg);
-  margin-top: 2rem;
+  border: 1px dashed var(--border);
+  margin: 2rem auto;
+  max-width: 500px;
 }
 
-/* Responsivo Favoritos */
+.favorites-empty span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.favorites-empty h3 {
+  margin-bottom: 0.5rem;
+}
+
+.favorites-empty button {
+  margin-top: 1rem;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
   .favorites-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .favorite-card-wrapper .card-image {
+    height: 150px;
+  }
+  .favorite-card-wrapper .product-img {
+    max-height: 130px;
+  }
+  .add-to-cart-fav,
+  .remove-favorite-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .favorite-card-wrapper {
+    max-width: 260px;
   }
   .favorite-card-wrapper .card-image {
     height: 140px;
@@ -2196,32 +2249,9 @@ body {
   .remove-favorite-btn {
     width: 32px;
     height: 32px;
-    font-size: 0.85rem;
-  }
-  .favorite-actions {
-    bottom: 8px;
-    right: 8px;
-    gap: 6px;
+    font-size: 0.9rem;
   }
 }
-
-@media (max-width: 480px) {
-  .favorites-grid {
-    grid-template-columns: 1fr;
-  }
-  .favorite-card-wrapper {
-    max-width: 100%;
-  }
-  .favorite-card-wrapper .card-image {
-    height: 160px;
-  }
-  .add-to-cart-fav,
-  .remove-favorite-btn {
-    width: 36px;
-    height: 36px;
-  }
-}
-
 /* ========== SUPORTE ========== */
 .chat-container {
   background: var(--dark-2);
