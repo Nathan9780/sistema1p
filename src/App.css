@@ -3271,3 +3271,47 @@ body {
   background: var(--dark-3);
   border-top: 1px solid var(--border);
 }
+
+/* =====================================================
+   CORREÇÃO DO MODO CLARO PARA OS INPUTS DE LOGIN
+   ===================================================== */
+[data-theme="light"] .login-card .form-group input {
+  background: #ffffff !important;
+  border: 2px solid #cccccc !important;
+  color: #111111 !important;
+}
+
+[data-theme="light"] .login-card .form-group input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2) !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+[data-theme="light"] .login-card .form-group input::placeholder {
+  color: #999999 !important;
+}
+
+[data-theme="light"] .login-card .login-btn {
+  background: var(--accent) !important;
+  color: #111111 !important;
+}
+
+[data-theme="light"] .login-card .login-btn:hover {
+  background: #111111 !important;
+  color: var(--accent) !important;
+}
+
+/* Garantia para todos os inputs no modo claro */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #cccccc !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #999999 !important;
+}
